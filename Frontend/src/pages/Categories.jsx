@@ -2,9 +2,19 @@ import { useState } from 'react';
 import { categories, products } from '../data/products';
 import ProductCard from '../components/ProductCard';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 function Categories() {
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const navigate = useNavigate();
+
+  const handleCategoryClick = (categoryId) => {
+    if (categoryId === 'shoes') {
+      navigate('/categories/shoes');
+    } else {
+      setSelectedCategory(categoryId);
+    }
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -19,7 +29,7 @@ function Categories() {
               animate={{ opacity: 1, y: 0 }}
               whileHover={{ scale: 1.05 }}
               className="cursor-pointer"
-              onClick={() => setSelectedCategory(category.id)}
+              onClick={() => handleCategoryClick(category.id)}
             >
               <div className="relative h-64 rounded-lg overflow-hidden">
                 <img

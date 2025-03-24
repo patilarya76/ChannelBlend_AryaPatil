@@ -11,12 +11,12 @@ function BarcodeScanner({ onDetected }) {
         type: "LiveStream",
         target: scannerRef.current,
         constraints: {
-          facingMode: "environment"
+          facingMode: "environment", // Use the back camera
         },
       },
       decoder: {
-        readers: ["ean_reader", "ean_8_reader", "upc_reader", "upc_e_reader"]
-      }
+        readers: ["ean_reader", "ean_8_reader", "upc_reader", "upc_e_reader"], // Supported barcode formats
+      },
     }, (err) => {
       if (err) {
         console.error(err);
