@@ -7,40 +7,59 @@ function ScannerModal({ isOpen, onClose, onScan }) {
   const [scanning, setScanning] = useState(false);
   const [barcode, setBarcode] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [productInfo, setProductInfo] = useState(null);
   const [scanHistory, setScanHistory] = useState(() => {
     const saved = localStorage.getItem("scanHistory");
     return saved ? JSON.parse(saved) : [];
   });
 
   const handleDetected = async (code) => {
-    // Avoid duplicate consecutive scans
     if (code === barcode) return;
-  
+    
     setBarcode(code);
     setIsLoading(true);
     setScanning(false);
-  
+
     try {
-      const response = await fetch(`http://localhost:5000/api/shoes/barcode/${code}`);
-      const product = await response.json();
-  
-      if (product) {
-        setProductInfo(product);
-        // Add to scan history
-        const newHistory = [
-          { barcode: code, product: product },
-          ...scanHistory.filter(item => item.barcode !== code).slice(0, 4)
-        ];
-        setScanHistory(newHistory);
-        localStorage.setItem("scanHistory", JSON.stringify(newHistory));
+      // Try to find the product in all collections
+      const collections = ['shoes', 'tshirts', 'accessories'];
+      let product = null;
+
+      for (const collection of collections) {
+        const response = await fetch(`http://localhost:5000/api/${collection}/barcode/${code}`);
+        if (response.ok) {
+          product = await response.json();
+          break;
+        }
       }
+
+      if (!product) {
+        // If product not found in any collection, create a mock product
+        product = {
+          name: `Scanned Item ${code.slice(-4)}`,
+          price: 99.99,
+          description: "Scanned product",
+          image: "https://via.placeholder.com/150",
+          barcode: code
+        };
+      }
+
+      // Add to scan history
+      const newHistory = [
+        { barcode: code, product },
+        ...scanHistory.filter(item => item.barcode !== code).slice(0, 4)
+      ];
+      setScanHistory(newHistory);
+      localStorage.setItem("scanHistory", JSON.stringify(newHistory));
+      
+      onScan(product);
+      onClose();
     } catch (error) {
-      console.error('Error finding product:', error);
+      console.error('Error processing scan:', error);
     } finally {
       setIsLoading(false);
     }
   };
+
   const clearScanHistory = () => {
     setScanHistory([]);
     localStorage.removeItem("scanHistory");
@@ -100,24 +119,29 @@ function ScannerModal({ isOpen, onClose, onScan }) {
                       <p className="font-mono text-blue-800">{barcode}</p>
                     </div>
                     
-                    {productInfo && (
-                      <div className="bg-white rounded-lg p-4 shadow-sm">
-                        <div className="flex justify-between mb-2">
-                          <h4 className="font-medium">{productInfo.name}</h4>
-                          <span className="font-semibold text-primary">${productInfo.price}</span>
-                        </div>
-                        <p className="text-sm text-gray-600 mb-3">{productInfo.description}</p>
-                        <button
-                          onClick={() => {
-                            onScan(productInfo);
-                            onClose();
-                          }}
-                          className="w-full bg-primary text-white py-2 px-4 rounded hover:bg-red-900 transition-colors"
-                        >
-                          Add to Cart
-                        </button>
+                    {/* Placeholder for product information */}
+                    <div className="bg-white rounded-lg p-4 shadow-sm">
+                      <div className="flex justify-between mb-2">
+                        <h4 className="font-medium">Scanned Item</h4>
+                        <span className="font-semibold text-primary">$99.99</span>
                       </div>
-                    )}
+                      <p className="text-sm text-gray-600 mb-3">Scanned product</p>
+                      <button
+                        onClick={() => {
+                          onScan({
+                            name: "Scanned Item",
+                            price: 99.99,
+                            description: "Scanned product",
+                            image: "https://via.placeholder.com/150",
+                            barcode: barcode
+                          });
+                          onClose();
+                        }}
+                        className="w-full bg-primary text-white py-2 px-4 rounded hover:bg-red-900 transition-colors"
+                      >
+                        Add to Cart
+                      </button>
+                    </div>
                   </div>
                 )}
               </div>

@@ -9,10 +9,18 @@ function Categories() {
   const navigate = useNavigate();
 
   const handleCategoryClick = (categoryId) => {
-    if (categoryId === 'shoes') {
-      navigate('/categories/shoes');
-    } else {
-      setSelectedCategory(categoryId);
+    switch(categoryId) {
+      case 'shoes':
+        navigate('/categories/shoes');
+        break;
+      case 'tshirts':
+        navigate('/categories/tshirts');
+        break;
+      case 'accessories':
+        navigate('/categories/accessories');
+        break;
+      default:
+        setSelectedCategory(categoryId);
     }
   };
 

@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
 
-const shoeSchema = new mongoose.Schema({
+const tshirtSchema = new mongoose.Schema({
   name: { type: String, required: true },
   price: { type: Number, required: true },
   description: { type: String, required: true },
   image: { type: String, required: true },
-  barcode: { type: String, unique: true }
+  barcode: { type: String, sparse: true }
 });
 
-const Shoe = mongoose.model("shoes", shoeSchema);
+const Tshirt = mongoose.model("tshirts", tshirtSchema);
 
-module.exports = Shoe;
+module.exports = Tshirt; 

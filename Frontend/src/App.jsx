@@ -7,6 +7,8 @@ import Categories from './pages/Categories';
 import Contact from './pages/Contact';
 import Cart from './pages/Cart';
 import Shoes from './pages/Shoes';
+import Tshirts from './pages/Tshirts';
+import Accessories from './pages/Accessories';
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
               <Route path="/contact" element={<Contact />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/categories/shoes" element={<Shoes />} />
+              <Route path="/categories/tshirts" element={<Tshirts />} />
+              <Route path="/categories/accessories" element={<Accessories />} />
             </Routes>
           </main>
           <Footer />
