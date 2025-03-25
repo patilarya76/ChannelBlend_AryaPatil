@@ -30,3 +30,326 @@ body {
 .hero-button {
   @apply px-6 py-3 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105;
 }
+
+/* Category Carousel Styles */
+.carousel-container {
+  @apply relative;
+}
+
+.carousel-container .slick-prev,
+.carousel-container .slick-next {
+  @apply z-10 w-12 h-12 absolute top-1/2 transform -translate-y-1/2;
+}
+
+.carousel-container .slick-prev {
+  @apply left-4;
+}
+
+.carousel-container .slick-next {
+  @apply right-4;
+}
+
+.carousel-container .slick-prev:before,
+.carousel-container .slick-next:before {
+  @apply text-4xl opacity-80 text-white transition-opacity duration-300;
+}
+
+.carousel-container .slick-dots {
+  @apply absolute bottom-6 w-full;
+}
+
+.carousel-container .slick-dots li button:before {
+  @apply text-white opacity-60 text-sm;
+}
+
+.carousel-container .slick-dots li.slick-active button:before {
+  @apply text-white opacity-100;
+}
+
+/* Hover effects */
+.carousel-container .slick-prev:hover:before,
+.carousel-container .slick-next:hover:before {
+  @apply opacity-100;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .carousel-container .slick-prev,
+  .carousel-container .slick-next {
+    @apply w-8 h-8;
+  }
+
+  .carousel-container .slick-prev:before,
+  .carousel-container .slick-next:before {
+    @apply text-2xl;
+  }
+}
+
+/* Hero Section Styles */
+.hero-carousel .slick-slide {
+  @apply relative;
+}
+
+.hero-carousel .slick-slide > div {
+  @apply h-full;
+}
+
+/* Smooth fade transition for carousel */
+.fade-enter {
+  @apply opacity-0;
+}
+
+.fade-enter-active {
+  @apply opacity-100 transition-opacity duration-500;
+}
+
+.fade-exit {
+  @apply opacity-100;
+}
+
+.fade-exit-active {
+  @apply opacity-0 transition-opacity duration-500;
+}
+
+/* Button hover effects */
+.hero-button {
+  @apply relative overflow-hidden transition-all duration-300;
+}
+
+.hero-button::after {
+  content: '';
+  @apply absolute inset-0 bg-white opacity-0 transition-opacity duration-300;
+}
+
+.hero-button:hover::after {
+  @apply opacity-10;
+}
+
+/* Hero Section Styles */
+.hero-slide-enter {
+  opacity: 0;
+  transform: scale(1.1);
+}
+
+.hero-slide-enter-active {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 1000ms, transform 1000ms;
+}
+
+.hero-slide-exit {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.hero-slide-exit-active {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 1000ms, transform 1000ms;
+}
+
+/* Glass morphism effects */
+.glass-card {
+  @apply backdrop-blur-lg bg-white/10 border border-white/20;
+}
+
+/* Custom animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+.floating {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Hero Section Enhancements */
+.text-shadow {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.content-shadow {
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Enhanced glass effect */
+.glass-panel {
+  @apply backdrop-blur-sm bg-black/30 border border-white/20;
+  box-shadow: 
+    0 4px 30px rgba(0, 0, 0, 0.1),
+    inset 0 0 20px rgba(255, 255, 255, 0.05);
+}
+
+/* Button hover effects */
+.hero-button {
+  @apply relative overflow-hidden transition-all duration-300;
+}
+
+.hero-button::after {
+  content: '';
+  @apply absolute inset-0 bg-white opacity-0 transition-opacity duration-300;
+}
+
+.hero-button:hover::after {
+  @apply opacity-10;
+}
+
+/* Enhanced text visibility styles */
+.text-shadow-lg {
+  text-shadow: 
+    2px 2px 0 rgba(0, 0, 0, 0.5),
+    4px 4px 8px rgba(0, 0, 0, 0.6);
+}
+
+.text-shadow-md {
+  text-shadow: 
+    1px 1px 0 rgba(0, 0, 0, 0.4),
+    2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Interactive card styles */
+.interactive-card {
+  transform-style: preserve-3d;
+  perspective: 1500px;
+  will-change: transform;
+  background: rgba(0, 0, 0, 0.6) !important;
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 8px 32px 0 rgba(0, 0, 0, 0.4),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.2),
+    0 0 64px rgba(0, 0, 0, 0.3);
+}
+
+.interactive-card:hover {
+  transform: translateZ(40px) rotateX(5deg) rotateY(5deg);
+}
+
+/* Static content within interactive card */
+.static-content {
+  transform: translateZ(20px);
+  pointer-events: none;
+}
+
+.static-content button {
+  pointer-events: auto;
+}
+
+/* Event card hover effects */
+.event-card-overlay {
+  @apply absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 transition-opacity duration-300;
+}
+
+.group:hover .event-card-overlay {
+  @apply opacity-100;
+}
+
+/* About section image hover effect */
+.about-image-container {
+  @apply relative overflow-hidden rounded-lg;
+}
+
+.about-image-container::after {
+  content: '';
+  @apply absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 transition-opacity duration-300;
+}
+
+.about-image-container:hover::after {
+  @apply opacity-100;
+}
+
+/* Featured Categories enhancements */
+.primary-light {
+  @apply text-primary/90;
+}
+
+/* Aspect ratio container */
+.aspect-w-16 {
+  position: relative;
+  padding-bottom: 56.25%;
+}
+
+.aspect-w-16 > * {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+/* Enhanced hover effects */
+.hover-lift {
+  @apply transition-all duration-300 ease-out;
+}
+
+.hover-lift:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* Gradient overlay */
+.category-overlay {
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0.4) 50%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+/* Enhanced About section styles */
+.about-image-grid {
+  @apply grid gap-4 relative;
+  perspective: 1000px;
+}
+
+.about-image-grid > div {
+  @apply transition-all duration-300;
+  transform-style: preserve-3d;
+}
+
+.about-stat-card {
+  @apply relative overflow-hidden;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+}
+
+.about-stat-card::before {
+  content: '';
+  @apply absolute inset-0 bg-gradient-to-r from-primary/5 to-red-500/5 opacity-0 transition-opacity duration-300;
+}
+
+.about-stat-card:hover::before {
+  @apply opacity-100;
+}
+
+/* Enhanced text gradient */
+.gradient-text {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-red-600;
+}
+
+/* Product detail modal styles */
+.modal-overlay {
+  @apply fixed inset-0 bg-black bg-opacity-50 z-50;
+  backdrop-filter: blur(4px);
+}
+
+.modal-content {
+  @apply bg-white rounded-xl shadow-2xl overflow-hidden;
+  max-height: 90vh;
+}
+
+/* Enhanced hover effects for product cards */
+.product-card-hover {
+  @apply transition-all duration-300 ease-out;
+}
+
+.product-card-hover:hover {
+  @apply shadow-xl transform -translate-y-2;
+}

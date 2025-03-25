@@ -9,6 +9,9 @@ import Cart from './pages/Cart';
 import Shoes from './pages/Shoes';
 import Tshirts from './pages/Tshirts';
 import Accessories from './pages/Accessories';
+import TravelEssentials from './pages/TravelEssentials';
+import EcoFriendly from './pages/EcoFriendly';
+import HomeLifestyle from './pages/HomeLifestyle';
 
 function App() {
   return (
@@ -25,6 +28,9 @@ function App() {
               <Route path="/categories/shoes" element={<Shoes />} />
               <Route path="/categories/tshirts" element={<Tshirts />} />
               <Route path="/categories/accessories" element={<Accessories />} />
+              <Route path="/categories/travel" element={<TravelEssentials />} />
+              <Route path="/categories/eco" element={<EcoFriendly />} />
+              <Route path="/categories/home" element={<HomeLifestyle />} />
             </Routes>
           </main>
           <Footer />
