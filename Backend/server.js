@@ -180,8 +180,8 @@ app.get("/api/home", async (req, res) => {
 
 app.post("/api/home", async (req, res) => {
   try {
-    const newHomeProduct = new Home(req.body);
-    const savedProduct = await newHomeProduct.save();
+    const newProduct = new Home(req.body);
+    const savedProduct = await newProduct.save();
     res.status(201).json(savedProduct);
   } catch (error) {
     console.error("Error creating home product:", error);

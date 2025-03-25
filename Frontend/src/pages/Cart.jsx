@@ -1,10 +1,9 @@
 import { useCart } from '../context/CartContext';
 import { motion } from 'framer-motion';
+import { FiMinus, FiPlus, FiTrash2 } from 'react-icons/fi';
 
 function Cart() {
-  const { cart, removeFromCart, updateQuantity } = useCart();
-
-  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const { cart, removeFromCart, updateQuantity, getCartTotal } = useCart();
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -17,7 +16,7 @@ function Cart() {
           <div className="lg:col-span-2">
             {cart.map((item) => (
               <motion.div
-                key={item.id}
+                key={item._id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
@@ -29,29 +28,29 @@ function Cart() {
                   className="w-24 h-24 object-cover rounded"
                 />
                 <div className="flex-1">
-                  <h3 className="font-semibold">{item.name}</h3>
+                  <h3 className="text-lg font-semibold">{item.name}</h3>
                   <p className="text-gray-600">${item.price}</p>
                 </div>
                 <div className="flex items-center gap-2">
                   <button
-                    onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                    className="px-2 py-1 bg-gray-200 rounded"
+                    onClick={() => updateQuantity(item._id, item.quantity - 1)}
+                    className="p-1 rounded-full hover:bg-gray-100"
                   >
-                    -
+                    <FiMinus />
                   </button>
                   <span className="w-8 text-center">{item.quantity}</span>
                   <button
-                    onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                    className="px-2 py-1 bg-gray-200 rounded"
+                    onClick={() => updateQuantity(item._id, item.quantity + 1)}
+                    className="p-1 rounded-full hover:bg-gray-100"
                   >
-                    +
+                    <FiPlus />
                   </button>
                 </div>
                 <button
-                  onClick={() => removeFromCart(item.id)}
+                  onClick={() => removeFromCart(item._id)}
                   className="text-red-500 hover:text-red-700"
                 >
-                  Remove
+                  <FiTrash2 size={20} />
                 </button>
               </motion.div>
             ))}
@@ -59,25 +58,21 @@ function Cart() {
           
           <div className="bg-white p-6 rounded-lg shadow h-fit">
             <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
-            <div className="space-y-2 mb-4">
+            <div className="space-y-2">
               <div className="flex justify-between">
                 <span>Subtotal</span>
-                <span>${total.toFixed(2)}</span>
+                <span>${getCartTotal().toFixed(2)}</span>
               </div>
-              <div className="flex justify-between">
-                <span>Shipping</span>
-                <span>Free</span>
+              <div className="border-t pt-2 mt-4">
+                <div className="flex justify-between font-semibold">
+                  <span>Total</span>
+                  <span>${getCartTotal().toFixed(2)}</span>
+                </div>
               </div>
+              <button className="w-full mt-6 bg-primary text-white py-2 rounded hover:bg-red-900 transition-colors">
+                Proceed to Checkout
+              </button>
             </div>
-            <div className="border-t pt-4">
-              <div className="flex justify-between font-semibold">
-                <span>Total</span>
-                <span>${total.toFixed(2)}</span>
-              </div>
-            </div>
-            <button className="w-full bg-primary text-white py-2 rounded mt-4 hover:bg-red-900 transition-colors">
-              Checkout
-            </button>
           </div>
         </div>
       )}

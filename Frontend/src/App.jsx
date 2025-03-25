@@ -12,6 +12,8 @@ import Accessories from './pages/Accessories';
 import TravelEssentials from './pages/TravelEssentials';
 import EcoFriendly from './pages/EcoFriendly';
 import HomeLifestyle from './pages/HomeLifestyle';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
@@ -34,6 +36,7 @@ function App() {
             </Routes>
           </main>
           <Footer />
+          <ToastContainer position="top-right" autoClose={5000} />
         </div>
       </Router>
     </CartProvider>

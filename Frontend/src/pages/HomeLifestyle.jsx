@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import ProductDetailModal from '../components/ProductDetailModal';
+import ProductCard from '../components/ProductCard';
 
 function HomeLifestyle() {
   const [homeProducts, setHomeProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const navigate = useNavigate();
   const { addToCart } = useCart();
 
@@ -25,6 +28,10 @@ function HomeLifestyle() {
     fetchHomeProducts();
   }, []);
 
+  const handleProductClick = (product) => {
+    setSelectedProduct(product);
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <button
@@ -34,39 +41,32 @@ function HomeLifestyle() {
         ← Back to Categories
       </button>
 
-      <h1 className="text-3xl font-bold mb-8">Home & Lifestyle Collection</h1>
+      <h1 className="text-3xl font-bold mb-8">Home & Lifestyle</h1>
       
       {loading ? (
         <p className="text-center">Loading...</p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {homeProducts.map((product) => (
-            <motion.div
+            <ProductCard
               key={product._id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="bg-white rounded-lg shadow-md overflow-hidden"
-            >
-              <img
-                src={product.image}
-                alt={product.name}
-                className="w-full h-48 object-cover"
-              />
-              <div className="p-4">
-                <h3 className="text-lg font-semibold">{product.name}</h3>
-                <p className="text-gray-600 mt-1">${product.price}</p>
-                <p className="text-sm text-gray-500 mt-2">{product.description}</p>
-                <button
-                  onClick={() => addToCart(product)}
-                  className="mt-4 w-full bg-primary text-white py-2 px-4 rounded hover:bg-red-900 transition-colors"
-                >
-                  Add to Cart
-                </button>
-              </div>
-            </motion.div>
+              product={{
+                ...product,
+                onClick: () => handleProductClick(product)
+              }}
+            />
           ))}
         </div>
       )}
+
+      <AnimatePresence>
+        {selectedProduct && (
+          <ProductDetailModal
+            product={selectedProduct}
+            onClose={() => setSelectedProduct(null)}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }

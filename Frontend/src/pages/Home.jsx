@@ -50,185 +50,112 @@ function Home() {
 
   const heroContent = [
     {
-      image: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=2070", // Fashion week
       title: "Luxury Fashion",
-      description: "Discover the latest trends in high-end fashion",
+      description: "Discover our latest collection",
+      image: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=2070",
     },
     {
-      image: "https://images.unsplash.com/photo-1445205170230-053b83016050?q=80&w=2071", // Elegant fashion
       title: "Timeless Elegance",
-      description: "Curated collections for the modern lifestyle",
+      description: "Explore premium styles",
+      image: "https://images.unsplash.com/photo-1445205170230-053b83016050?q=80&w=2071",
     },
     {
-      image: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2070", // Street style
       title: "Street Style",
-      description: "Urban fashion for the bold and adventurous",
-    }
+      description: "Contemporary urban fashion",
+      image: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2070",
+    },
   ];
 
   const settings = {
     dots: false,
     infinite: true,
-    speed: 1000,
+    speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 5000,
-    fade: true,
-    arrows: false,
-    beforeChange: (current, next) => setActiveIndex(next)
+    autoplaySpeed: 3000,
+    arrows: false
   };
 
   return (
-    <div className="min-h-screen">
-      <section className="relative h-[85vh] overflow-hidden">
-        {/* Main carousel */}
-        <div className="absolute inset-0 z-10">
-          <Slider {...settings} className="h-full">
-            {heroContent.map((content, index) => (
-              <div key={index} className="relative h-[85vh]">
+    <div className="relative">
+      <div className="h-[85vh] relative">
+        <Slider {...settings} className="h-full">
+          {heroContent.map((content, index) => (
+            <div key={index} className="relative h-[85vh]">
+              {/* Background Image with Blur */}
+              <div className="absolute inset-0">
                 <img
                   src={content.image}
                   alt={content.title}
-                  className="absolute inset-0 w-full h-full object-cover"
+                  className="w-full h-full object-cover filter blur-[4px]"
                 />
-                <div className="absolute inset-0 bg-black bg-opacity-50" />
+                {/* Subtle dark overlay for readability */}
+                <div 
+                  className="absolute inset-0 bg-black/30"
+                  style={{ 
+                    mixBlendMode: 'multiply'
+                  }}
+                />
               </div>
-            ))}
-          </Slider>
-        </div>
-
-        {/* Content overlay with enhanced interactive hover effect */}
-        <div className="relative z-30 h-full flex items-center">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              ref={contentRef}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ 
-                opacity: 1,
-                y: 0,
-                x: mousePosition.x,
-                y: mousePosition.y,
-                rotateX: mousePosition.y * -0.5,
-                rotateY: mousePosition.x * 0.5,
-              }}
-              transition={{ 
-                duration: 0.8,
-                x: { type: "spring", stiffness: 150, damping: 15 },
-                y: { type: "spring", stiffness: 150, damping: 15 },
-                rotateX: { type: "spring", stiffness: 150, damping: 15 },
-                rotateY: { type: "spring", stiffness: 150, damping: 15 }
-              }}
-              onMouseMove={handleMouseMove}
-              onMouseLeave={() => setMousePosition({ x: 0, y: 0 })}
-              className="interactive-card glass-effect p-8 rounded-2xl shadow-2xl max-w-2xl mx-auto transform-gpu"
-            >
-              <div className="static-content">
-                <h1 className="text-6xl font-bold mb-6 text-white text-shadow-lg">
-                  {heroContent[activeIndex].title}
-                </h1>
-                <p className="text-2xl mb-8 text-white text-shadow-md font-medium">
-                  {heroContent[activeIndex].description}
-                </p>
-                <div className="flex justify-center">
-                  <Link to="/categories">
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="bg-white text-primary px-8 py-4 rounded-lg font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl"
-                    >
-                      View Collections
-                    </motion.button>
+              
+              {/* Content */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="text-center text-white p-8 rounded-lg max-w-2xl backdrop-blur-sm bg-black/10">
+                  <h2 className="text-5xl font-bold mb-4 text-shadow-lg">{content.title}</h2>
+                  <p className="text-xl mb-8 text-shadow-md">{content.description}</p>
+                  <Link
+                    to="/categories"
+                    className="inline-block px-8 py-3 text-lg font-semibold text-white border-2 border-white 
+                      hover:bg-white hover:text-black transition-all duration-300 
+                      hover:shadow-lg transform hover:-translate-y-1"
+                  >
+                    View Collections
                   </Link>
                 </div>
               </div>
-            </motion.div>
-          </div>
-        </div>
-
-        {/* Navigation dots */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30 flex space-x-3">
-          {heroContent.map((_, index) => (
-            <motion.div
-              key={index}
-              className={`w-3 h-3 rounded-full ${
-                index === activeIndex ? 'bg-white' : 'bg-white/50'
-              } cursor-pointer shadow-lg`}
-              whileHover={{ scale: 1.2 }}
-              onClick={() => setActiveIndex(index)}
-            />
+            </div>
           ))}
-        </div>
-      </section>
+        </Slider>
+      </div>
 
-      {/* Enhanced Featured Categories Section */}
-      <section className="py-20 bg-gradient-to-b from-white to-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Featured Categories</h2>
-            <p className="text-lg text-gray-600">Discover our exclusive collections</p>
-          </motion.div>
-
+      {/* Update the Featured Categories section */}
+      <div className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4">
+          <h2 className="text-4xl font-bold mb-12 text-center">
+            Featured Categories
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {featuredCategories.map((category, index) => (
-              <Link to={category.path} key={category.id}>
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.2 }}
-                  whileHover={{ 
-                    y: -10,
-                    scale: 1.02,
-                    transition: { duration: 0.2 }
-                  }}
-                  viewport={{ once: true }}
-                  className="group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300"
-                >
-                  <div className="aspect-w-16 aspect-h-9 relative">
-                    <img
-                      src={category.image}
-                      alt={category.title}
-                      className="w-full h-64 object-cover transform group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300" />
+            {featuredCategories.map((category) => (
+              <Link
+                key={category.id}
+                to={category.path}
+                className="category-card group relative overflow-hidden rounded-lg shadow-lg h-[400px]"
+              >
+                <div className="absolute inset-0 w-full h-full transform transition-transform duration-500 group-hover:scale-110">
+                  <img
+                    src={category.image}
+                    alt={category.title}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-40 transition-opacity duration-300" />
+                <div className="absolute inset-x-0 bottom-0 p-6 transform translate-y-6 group-hover:translate-y-0 transition-transform duration-300">
+                  <div className="text-white">
+                    <h3 className="text-2xl font-bold mb-2 text-shadow-md">{category.title}</h3>
+                    <p className="text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      {category.description}
+                    </p>
                   </div>
-                  
-                  <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                    <motion.div
-                      initial={{ y: 10, opacity: 0 }}
-                      whileInView={{ y: 0, opacity: 1 }}
-                      transition={{ delay: 0.1 }}
-                      className="relative z-10"
-                    >
-                      <h3 className="text-2xl font-bold mb-2 group-hover:text-primary-light transition-colors duration-300">
-                        {category.title}
-                      </h3>
-                      <p className="text-gray-200 text-sm mb-4 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
-                        {category.description}
-                      </p>
-                      <span className="inline-flex items-center text-sm font-semibold text-white group-hover:text-primary-light transition-colors duration-300">
-                        Explore Collection
-                        <svg className="w-4 h-4 ml-2 transform group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-                        </svg>
-                      </span>
-                    </motion.div>
-                  </div>
-                </motion.div>
+                </div>
               </Link>
             ))}
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* About Us Section */}
-      <section className="py-20 bg-gradient-to-b from-white to-gray-50">
+      {/* Update the About Us section */}
+      <div className="py-16 bg-[#440d0f]/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0 }}
@@ -380,10 +307,10 @@ function Home() {
             </div>
           </motion.div>
         </div>
-      </section>
+      </div>
 
-      {/* Upcoming Events Section */}
-      <section className="py-16 bg-white">
+      {/* Update the Upcoming Events section */}
+      <div className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.h2 
             className="text-3xl font-bold text-center mb-12"
@@ -436,7 +363,7 @@ function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </div>
     </div>
   );
 }

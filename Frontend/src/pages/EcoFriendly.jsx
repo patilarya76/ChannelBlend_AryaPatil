@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import ProductDetailModal from '../components/ProductDetailModal';
 
 function EcoFriendly() {
   const [ecoProducts, setEcoProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const navigate = useNavigate();
   const { addToCart } = useCart();
 
@@ -24,6 +26,10 @@ function EcoFriendly() {
 
     fetchEcoProducts();
   }, []);
+
+  const handleProductClick = (product) => {
+    setSelectedProduct(product);
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -45,7 +51,9 @@ function EcoFriendly() {
               key={product._id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-white rounded-lg shadow-md overflow-hidden"
+              whileHover={{ scale: 1.05 }}
+              className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer"
+              onClick={() => handleProductClick(product)}
             >
               <img
                 src={product.image}
@@ -56,17 +64,20 @@ function EcoFriendly() {
                 <h3 className="text-lg font-semibold">{product.name}</h3>
                 <p className="text-gray-600 mt-1">${product.price}</p>
                 <p className="text-sm text-gray-500 mt-2">{product.description}</p>
-                <button
-                  onClick={() => addToCart(product)}
-                  className="mt-4 w-full bg-primary text-white py-2 px-4 rounded hover:bg-red-900 transition-colors"
-                >
-                  Add to Cart
-                </button>
               </div>
             </motion.div>
           ))}
         </div>
       )}
+
+      <AnimatePresence>
+        {selectedProduct && (
+          <ProductDetailModal
+            product={selectedProduct}
+            onClose={() => setSelectedProduct(null)}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }

@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import ProductDetailModal from '../components/ProductDetailModal';
+import ProductCard from '../components/ProductCard';
 
 function Shoes() {
   const [shoes, setShoes] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const navigate = useNavigate();
   const { addToCart } = useCart();
 
@@ -25,6 +28,10 @@ function Shoes() {
     fetchShoes();
   }, []);
 
+  const handleProductClick = (product) => {
+    setSelectedProduct(product);
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <button
@@ -41,32 +48,25 @@ function Shoes() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {shoes.map((shoe) => (
-            <motion.div
+            <ProductCard
               key={shoe._id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="bg-white rounded-lg shadow-md overflow-hidden"
-            >
-              <img
-                src={shoe.image}
-                alt={shoe.name}
-                className="w-full h-48 object-cover"
-              />
-              <div className="p-4">
-                <h3 className="text-lg font-semibold">{shoe.name}</h3>
-                <p className="text-gray-600 mt-1">${shoe.price}</p>
-                <p className="text-sm text-gray-500 mt-2">{shoe.description}</p>
-                <button
-                  onClick={() => addToCart(shoe)}
-                  className="mt-4 w-full bg-primary text-white py-2 px-4 rounded hover:bg-red-900 transition-colors"
-                >
-                  Add to Cart
-                </button>
-              </div>
-            </motion.div>
+              product={{
+                ...shoe,
+                onClick: () => handleProductClick(shoe)
+              }}
+            />
           ))}
         </div>
       )}
+
+      <AnimatePresence>
+        {selectedProduct && (
+          <ProductDetailModal
+            product={selectedProduct}
+            onClose={() => setSelectedProduct(null)}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
