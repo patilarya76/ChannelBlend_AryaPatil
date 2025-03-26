@@ -12,6 +12,7 @@ import Accessories from './pages/Accessories';
 import TravelEssentials from './pages/TravelEssentials';
 import EcoFriendly from './pages/EcoFriendly';
 import HomeLifestyle from './pages/HomeLifestyle';
+import Checkout from './pages/Checkout';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -33,10 +34,11 @@ function App() {
               <Route path="/categories/travel" element={<TravelEssentials />} />
               <Route path="/categories/eco" element={<EcoFriendly />} />
               <Route path="/categories/home" element={<HomeLifestyle />} />
+              <Route path="/checkout" element={<Checkout />} />
             </Routes>
           </main>
           <Footer />
-          <ToastContainer position="top-right" autoClose={5000} />
+          <ToastContainer />
         </div>
       </Router>
     </CartProvider>

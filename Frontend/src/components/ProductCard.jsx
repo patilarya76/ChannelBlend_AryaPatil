@@ -2,7 +2,8 @@ import { useCart } from '../context/CartContext';
 import { motion } from 'framer-motion';
 
 function ProductCard({ product }) {
-  const { addToCart } = useCart();
+  const { addToCart, cart } = useCart();
+  const isInCart = cart.some(item => item._id === product._id);
 
   return (
     <motion.div
@@ -31,9 +32,14 @@ function ProductCard({ product }) {
             e.stopPropagation();
             addToCart(product);
           }}
-          className="w-full bg-primary text-white py-2 px-4 rounded hover:bg-red-900 transition-colors"
+          className={`w-full py-2 px-4 rounded transition-colors ${
+            isInCart 
+              ? 'bg-gray-400 cursor-not-allowed'
+              : 'bg-primary text-white hover:bg-red-900'
+          }`}
+          disabled={isInCart}
         >
-          Add to Cart
+          {isInCart ? 'In Cart' : 'Add to Cart'}
         </button>
       </div>
     </motion.div>

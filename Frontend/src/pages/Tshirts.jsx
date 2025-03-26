@@ -15,7 +15,7 @@ function Tshirts() {
   useEffect(() => {
     const fetchTshirts = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/tshirts');
+        const response = await fetch('https://channelblend-aryapatil.onrender.com/api/tshirts');
         const data = await response.json();
         setTshirts(data);
         setLoading(false);

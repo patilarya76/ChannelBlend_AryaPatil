@@ -15,7 +15,7 @@ function TravelEssentials() {
   useEffect(() => {
     const fetchTravelItems = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/travel');
+        const response = await fetch('https://channelblend-aryapatil.onrender.com/api/travel');
         const data = await response.json();
         setTravelItems(data);
         setLoading(false);

@@ -1,9 +1,11 @@
 import { useCart } from '../context/CartContext';
 import { motion } from 'framer-motion';
 import { FiMinus, FiPlus, FiTrash2 } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
 
 function Cart() {
-  const { cart, removeFromCart, updateQuantity, getCartTotal } = useCart();
+  const { cart, removeFromCart, updateQuantity, getCartTotal, handleCheckout } = useCart();
+  const navigate = useNavigate();
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -69,7 +71,10 @@ function Cart() {
                   <span>${getCartTotal().toFixed(2)}</span>
                 </div>
               </div>
-              <button className="w-full mt-6 bg-primary text-white py-2 rounded hover:bg-red-900 transition-colors">
+              <button
+                onClick={() => navigate('/checkout')}
+                className="w-full mt-6 bg-primary text-white py-2 rounded hover:bg-red-900 transition-colors"
+              >
                 Proceed to Checkout
               </button>
             </div>

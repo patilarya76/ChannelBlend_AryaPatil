@@ -15,7 +15,7 @@ function Accessories() {
   useEffect(() => {
     const fetchAccessories = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/accessories');
+        const response = await fetch('https://channelblend-aryapatil.onrender.com/api/accessories');
         const data = await response.json();
         setAccessories(data);
         setLoading(false);

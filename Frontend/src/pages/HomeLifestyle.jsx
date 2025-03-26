@@ -15,7 +15,7 @@ function HomeLifestyle() {
   useEffect(() => {
     const fetchHomeProducts = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/home');
+        const response = await fetch('https://channelblend-aryapatil.onrender.com/api/home');
         const data = await response.json();
         setHomeProducts(data);
         setLoading(false);

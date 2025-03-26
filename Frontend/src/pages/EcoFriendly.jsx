@@ -14,7 +14,7 @@ function EcoFriendly() {
   useEffect(() => {
     const fetchEcoProducts = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/eco');
+        const response = await fetch('https://channelblend-aryapatil.onrender.com/api/eco');
         const data = await response.json();
         setEcoProducts(data);
         setLoading(false);
