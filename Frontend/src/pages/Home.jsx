@@ -83,16 +83,16 @@ function Home() {
         <Slider {...settings} className="h-full">
           {heroContent.map((content, index) => (
             <div key={index} className="relative h-[85vh]">
-              {/* Background Image with Blur */}
+              {/* Background Image without Blur */}
               <div className="absolute inset-0">
                 <img
                   src={content.image}
                   alt={content.title}
-                  className="w-full h-full object-cover filter blur-[4px]"
+                  className="w-full h-full object-cover"
                 />
                 {/* Subtle dark overlay for readability */}
                 <div 
-                  className="absolute inset-0 bg-black/30"
+                  className="absolute inset-0 bg-black/20"
                   style={{ 
                     mixBlendMode: 'multiply'
                   }}
@@ -101,7 +101,7 @@ function Home() {
               
               {/* Content */}
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center text-white p-8 rounded-lg max-w-2xl backdrop-blur-sm bg-black/10">
+                <div className="text-center text-white p-8 rounded-lg max-w-2xl">
                   <h2 className="text-5xl font-bold mb-4 text-shadow-lg">{content.title}</h2>
                   <p className="text-xl mb-8 text-shadow-md">{content.description}</p>
                   <Link
