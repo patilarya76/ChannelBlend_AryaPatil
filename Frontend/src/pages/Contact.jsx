@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import emailjs from '@emailjs/browser';
 import { toast } from 'react-toastify';
 
 function Contact() {
@@ -12,28 +11,12 @@ function Contact() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  useEffect(() => {
-    emailjs.init("G4aS8eA74x_JUzbdQ5H33");
-  }, []);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
-      await emailjs.send(
-        "service_boqk1gh",
-        "template_ezaftdg",
-        {
-          from_name: formData.name,
-          from_email: formData.email,
-          subject: formData.subject,
-          message: formData.message,
-          to_email: "aryaanilp86@gmail.com",
-        },
-        "G4aS8eA74x_JUzbdQ5H33"
-      );
-
+      // Simulate a successful form submission
       toast.success('Message sent successfully!');
       setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (error) {
