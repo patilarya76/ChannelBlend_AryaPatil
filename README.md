@@ -3,7 +3,7 @@
 ChannelBlend is a modern e-commerce platform built with React, Node.js, and MongoDB, featuring a responsive design and seamless shopping experience.
 
 ## Demo & Explanation
-[Watch Video Explanation](https://drive.google.com/file/d/14KFuj0CpKjZNbBpQ6hqWFL4cLWtrRfBy/view?usp=sharing)
+[[Watch Video Explanation](https://drive.google.com/file/d/14KFuj0CpKjZNbBpQ6hqWFL4cLWtrRfBy/view?usp=sharing)](https://drive.google.com/file/d/1hAclm1MRFxAfM-MJh9FUI0LSlxegEKKS/view?usp=sharing)
 
 ### Deployment Link
 https://channel-blend-arya-patil-pwqc-cyrx4h8vn-arya-patils-projects.vercel.app/
